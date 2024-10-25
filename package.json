@@ -4,9 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build":"tsc -w",
-    "dev": "node --watch production/main.js",
-    "start": "node production/main.js"
+    "build": "tsc -w",
+    "dev": "node --watch dist/main.js",
+    "start": "node dist/main.js"
   },
   "keywords": [],
   "author": "",
@@ -17,13 +17,14 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "json-web-token": "^3.2.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/morgan": "^1.9.9",
     "helmet": "^8.0.0",
     "morgan": "^1.10.0"
