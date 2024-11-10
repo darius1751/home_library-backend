@@ -6,12 +6,12 @@ export const login = async (request: Request, response: Response) => {
     try {
         const credential = request.body;
         const user = await authService.login(credential);
-        const token = sign(user.id, process.env.JWT_SECRET || '', {
-            expiresIn: '10h'
-        });
+        const { id, name } = user;
+        const token = sign({ id, name }, process.env.JWT_SECRET || '', { expiresIn: '1m' });
         response.cookie("token", token, { httpOnly: true, secure: true }).json(user);
     } catch (error: any) {
         const { statusCode = 500 } = error;
+        console.log({ error })
         response.status(statusCode).json(error);
     }
 }
