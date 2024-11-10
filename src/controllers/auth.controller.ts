@@ -20,6 +20,6 @@ export const logout = async (_request: Request, response: Response) => {
     try {
         response.clearCookie("token").json({ message: `Logout successfull` })
     } catch (error) {
-        response.status(403).json({ message: `Logout successfull` });
+        response.status(403).json({ message: `Not exists token in cookies` });
     }
 }
