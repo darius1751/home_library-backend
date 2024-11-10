@@ -18,11 +18,6 @@ export const UserSchema = new Schema({
         required: true,
         match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
     },
-    photo: {
-        type: String,
-        required: true,
-        match: /\.(gif|avif|png|jpg|svg|jpeg|webp)$/i
-    },
     birthday: {
         type: SchemaTypes.Date,
         required: true
