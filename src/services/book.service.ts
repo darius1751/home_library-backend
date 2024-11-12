@@ -4,10 +4,7 @@ import Book from "../models/book.model";
 
 const createOne = async (createBookDto: CreateBookDto) => {
     try {
-        console.log(createBookDto)
-        return {
-            ...createBookDto}
-        //return await Book.create(createBookDto);
+        return await Book.create(createBookDto);
     } catch (error) {
         throw error;
     }

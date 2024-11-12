@@ -4,10 +4,9 @@ import { bookService } from "../services/book.service";
 
 export const createOne = async (request: Request, response: Response) => {
     try {
-        console.log(request.body)
-       // const createBookDto: CreateBookDto = request.body;
-        //const book = await bookService.createOne(createBookDto);
-        response.json({});
+        const createBookDto: CreateBookDto = request.body;
+        const book = await bookService.createOne(createBookDto);
+        response.json(book);
     } catch (error: any) {
         const { statusCode = 500 } = error;
         response.status(statusCode).json(error);
