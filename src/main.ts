@@ -11,6 +11,7 @@ import { swaggerConfig } from './swagger.config';
 import { swaggerConfig2 } from './swagger.config.example';
 import { authRouter } from './routers/auth.router';
 import { userRouter } from './routers/user.router';
+import { bookRouter } from './routers/book.router';
 
 const main = async () => {
     const app = express();
@@ -26,6 +27,7 @@ const main = async () => {
     app.use('/api-docs-example', serve, setup(swaggerConfig2));
     app.use('/api/v1/auth', authRouter);
     app.use('/api/v1/user', userRouter);
+    app.use('/api/v1/books', bookRouter);
     await openConnection();
     app.listen(port, () => {
         console.log(`Run app in port: ${port}`);
