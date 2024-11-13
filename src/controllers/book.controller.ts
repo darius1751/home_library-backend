@@ -1,11 +1,15 @@
-import CreateBookDto from "../interfaces/create-book-dto";
 import { Request, Response } from "express";
 import { bookService } from "../services/book.service";
 
 export const createOne = async (request: Request, response: Response) => {
     try {
-        const createBookDto: CreateBookDto = request.body;
-        const book = await bookService.createOne(createBookDto);
+        const { file, body: createBookDto } = request;
+        if (!file)
+            throw {
+                statusCode: 400,
+                message: `The image is required`
+            }
+        const book = await bookService.createOne(createBookDto, file!);
         response.json(book);
     } catch (error: any) {
         const { statusCode = 500 } = error;
