@@ -1,13 +1,18 @@
 import CreateBookDto from "../interfaces/create-book-dto";
 import Book from "../models/book.model";
+import { handleUploadFile } from "../utils/handleUploadFile";
+import { validateFile } from "../utils/validateFile";
 
 
-const createOne = async (createBookDto: CreateBookDto) => {
+const createOne = async (createBookDto: CreateBookDto, imageFile: Express.Multer.File) => {
     try {
-        console.log(createBookDto)
-        return {
-            ...createBookDto}
-        //return await Book.create(createBookDto);
+        const book = await Book.create(createBookDto);
+        const { id } = book;
+        const { size, buffer, mimetype } = imageFile;
+        validateFile(mimetype, size);
+        const image = await handleUploadFile({ filename: id, mimetype, buffer });
+        book.image = image;
+        return await book.save();
     } catch (error) {
         throw error;
     }
