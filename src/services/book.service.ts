@@ -35,7 +35,8 @@ const getOneById = async (id: string) => {
 
 const updateOneById = async (id: string, updateBookDto: CreateBookDto) => {
     try {
-        return await Book.findByIdAndUpdate(id, updateBookDto);
+        const book = await Book.findByIdAndUpdate(id, updateBookDto);
+        return book
     } catch (error) {
         throw error;
     }
