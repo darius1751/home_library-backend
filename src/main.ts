@@ -4,7 +4,6 @@ import { config } from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import cookieParser from 'cookie-parser'
 import { serve, setup } from 'swagger-ui-express';
 import { openConnection } from './config/mongoose.config';
 import { swaggerConfig } from './swagger.config';
@@ -17,9 +16,9 @@ const main = async () => {
     const app = express();
     config();
     app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }));
+    // Remove in production version
     app.use(morgan('tiny'));
     app.use(helmet());
-    app.use(cookieParser());
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
     const port = env.PORT || 4000;

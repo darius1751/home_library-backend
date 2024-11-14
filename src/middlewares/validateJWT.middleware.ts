@@ -3,14 +3,15 @@ import { verify } from "jsonwebtoken";
 
 export const validateJWT = async (request: Request, response: Response, next: NextFunction) => {
     try {
-        const { token } = request.cookies;
+        const { token } = request.headers;
         if (!token) {
             response.status(402).json({
                 message: `Token is required`
             })
             return;
         }
-        verify(token, process.env.JWT_SECRET || '');
+        verify(token as string, process.env.JWT_SECRET || '');
+        next();
     } catch (error) {
         response.status(401).json(error);
     }
