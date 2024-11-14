@@ -21,7 +21,7 @@ bookRouter.post('/', uploadFile.single('image'), createOne);
 bookRouter.get('/', getAll)
 bookRouter.get('/user/:id', getAllByUserId)
 bookRouter.get('/:id', getOneById)
-bookRouter.patch('/:id', updateOneById)
+bookRouter.patch('/:id', uploadFile.single('image'), updateOneById)
 bookRouter.delete('/:id', deleteOneById)
 bookRouter.put('/:id', addGenre)
 bookRouter.get('/genre/:genre', getAllByGenre)
