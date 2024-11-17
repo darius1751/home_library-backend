@@ -33,10 +33,19 @@ const getOneById = async (id: string) => {
     }
 }
 
-const updateOneById = async (id: string, updateBookDto: CreateBookDto) => {
+const updateOneById = async (id: string, updateBookDto: CreateBookDto, imageFile?: Express.Multer.File) => {
     try {
-        const book = await Book.findByIdAndUpdate(id, updateBookDto);
-        return book
+        const book = await Book.findByIdAndUpdate(id, updateBookDto, { new: true });
+        if (imageFile) {
+            const { size, buffer, mimetype } = imageFile;
+            validateFile(mimetype, size);
+            const image = await handleUploadFile({ filename: id, mimetype, buffer });
+            book!.image = image;
+        }
+        if (updateBookDto.genres) {
+            book?.updateOne({ $set: updateBookDto.genres });
+        }
+        return await book?.save()
     } catch (error) {
         throw error;
     }

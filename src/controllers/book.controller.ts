@@ -41,8 +41,9 @@ export const getOneById = async (request: Request, response: Response) => {
 export const updateOneById = async (request: Request, response: Response) => {
     try {
         const { id } = request.params;
+        const { file } = request;
         const updateBookDto = request.body;
-        const book = await bookService.updateOneById(id, updateBookDto);
+        const book = await bookService.updateOneById(id, updateBookDto, file);
         response.json(book);
     } catch (error: any) {
         const { statusCode = 500 } = error;
