@@ -18,11 +18,12 @@ const uploadFile = multer({
     storage,
 });
 
-bookRouter.post('/', validateJWT, uploadFile.single('image'), createOne);
+bookRouter.post('/', validateJWT, uploadFile.single('cover'), createOne);
 bookRouter.get('/', getAll);
 bookRouter.get('/user/:id', validateJWT, getAllByUserId);
 bookRouter.get('/:id', validateJWT, getOneById);
-bookRouter.patch('/:id', validateJWT, uploadFile.single('image'), updateOneById);
+bookRouter.put('/:id', validateJWT, uploadFile.single('cover'), updateOneById);
+bookRouter.patch('/:id', validateJWT, uploadFile.single('cover'), updateOneById);
 bookRouter.delete('/:id', validateJWT, deleteOneById);
 bookRouter.put('/:id', validateJWT, addGenre);
 bookRouter.get('/genre/:genre', validateJWT, getAllByGenre);
