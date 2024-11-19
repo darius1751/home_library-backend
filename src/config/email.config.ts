@@ -12,8 +12,7 @@ export const transport = createTransport(<any>{
         clientId: process.env.OAUTH_CLIENTID,
         clientSecret: process.env.OAUTH_CLIENT_SECRET,
         refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-        accessToken: process.env.OAUTH_ACCESS_TOKEN,
-        // accessToken: 'ya29.a0AeDClZDj-hbQJPXVR6uVfWgvWCVLejNYZKVCyQxxFSuQUfJaqGAiv_aok7Pp2PF6rkaPdcM3z0wvPJNr1J8-s0QSOBgm7E2VhcxKkhAcDACiit_66JNJ-STHb3Yd4ap7J52L-nwSRBmGeBqY13QgnIKbnMH9IG1rmeYGOLGlaCgYKAeQSARASFQHGX2MipiIy5GrsGsOCciFLX0Fmkw0175'
+        accessToken: process.env.OAUTH_ACCESS_TOKEN
     }
 })
 
