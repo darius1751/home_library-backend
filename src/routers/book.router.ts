@@ -20,7 +20,7 @@ const uploadFile = multer({
 
 bookRouter.post('/', validateJWT, uploadFile.single('cover'), createOne);
 bookRouter.get('/', getAll);
-bookRouter.get('/user/:id', validateJWT, getAllByUserId);
+bookRouter.get('/user/:id',  getAllByUserId);
 bookRouter.get('/:id', validateJWT, getOneById);
 bookRouter.put('/:id', validateJWT, uploadFile.single('cover'), updateOneById);
 bookRouter.patch('/:id', validateJWT, uploadFile.single('cover'), updateOneById);

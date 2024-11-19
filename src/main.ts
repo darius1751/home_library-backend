@@ -11,7 +11,8 @@ import { swaggerConfig2 } from './swagger.config.example';
 import { authRouter } from './routers/auth.router';
 import { userRouter } from './routers/user.router';
 import { bookRouter } from './routers/book.router';
-import { transport } from './config/email.config';
+import { emailRouter } from './routers/email.router';
+
 
 const main = async () => {
     const app = express();
@@ -28,6 +29,10 @@ const main = async () => {
     app.use('/api/v1/auth', authRouter);
     app.use('/api/v1/user', userRouter);
     app.use('/api/v1/books', bookRouter);
+    app.use('/api/v1/email', emailRouter);
+
+
+
     await openConnection();
     app.listen(port, () => {
         console.log(`Run app in port: ${port}`);
