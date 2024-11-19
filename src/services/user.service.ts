@@ -27,8 +27,9 @@ const getOneById = async (id: string) => {
 
 const updateById = async (id: string, updateUserDto: CreateUserDto) => {
     try {
-       
+       console.log("IN SERVICE")
         const user = await userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
+        console.log("USER", user)
         if (!user) {
             throw {
                 statusCode: 400,

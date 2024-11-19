@@ -36,6 +36,7 @@ export const getOneById = async (request: Request, response: Response) => {
 
 export const updateById = async (request: Request, response: Response) => {
     try {
+        console.log("IN CONTROLLER")
         const { id } = request.params;
         validateMongoId(id);
         const updateUserDto = request.body;
