@@ -11,6 +11,7 @@ import { swaggerConfig2 } from './swagger.config.example';
 import { authRouter } from './routers/auth.router';
 import { userRouter } from './routers/user.router';
 import { bookRouter } from './routers/book.router';
+import { transport } from './config/email.config';
 
 const main = async () => {
     const app = express();
