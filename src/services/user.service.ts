@@ -2,6 +2,7 @@ import { CreateUserDto } from "../interfaces/create-user-dto";
 import { userModel } from "../models/user.model"
 import { authService } from "./auth.service";
 
+
 const getAll = async () => {
     try {
         return await userModel.find();
@@ -19,6 +20,22 @@ const getOneById = async (id: string) => {
             }
         }
         return user;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateById = async (id: string, updateUserDto: CreateUserDto) => {
+    try {
+       
+        const user = await userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
+        if (!user) {
+            throw {
+                statusCode: 400,
+                message: `Not exist user with id: ${id}`
+            }
+        }
+        return await user?.save()
     } catch (error) {
         throw error;
     }
@@ -58,4 +75,12 @@ const createOne = async (createUserDto: CreateUserDto) => {
 const existsEmail = async (email: string) => {
     return !!await userModel.exists({ email });
 }
-export const userService = { getOneByCredentialId, createOne, getAll, getOneById }
+
+const getOneByEmail = async (email: string) => {
+    try {
+        return await userModel.findOne({ email });
+    } catch (error) {
+        throw error;
+    }
+}
+export const userService = {updateById, getOneByCredentialId, createOne, getAll, getOneById, getOneByEmail }
