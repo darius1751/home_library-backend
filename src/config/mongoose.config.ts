@@ -8,7 +8,7 @@ export const openConnection = async () => {
             directConnection: true,
             connectTimeoutMS: 3000 
         });
-        console.log('MongoDB Connection Work');
+        console.log('MongoDB Connection Is Working');
     } catch (error) {
         console.warn(`Error in connection with MongoDB: ${error}`);
     }
