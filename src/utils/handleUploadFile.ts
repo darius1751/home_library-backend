@@ -20,7 +20,7 @@ export const handleUploadFile = async ({ filename, mimetype, buffer }: FileData)
             resource_type: 'auto',
             filename_override: `${filename}.${ext}`,
             use_filename: true,
-            folder: `book_cover`,
+            folder: `homelibrary/${filename}/books`,
         });
         return secure_url;
     } catch (error: any) {

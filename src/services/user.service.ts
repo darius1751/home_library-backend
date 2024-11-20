@@ -25,22 +25,7 @@ const getOneById = async (id: string) => {
     }
 }
 
-const updateById = async (id: string, updateUserDto: CreateUserDto) => {
-    try {
-       console.log("IN SERVICE")
-        const user = await userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
-        console.log("USER", user)
-        if (!user) {
-            throw {
-                statusCode: 400,
-                message: `Not exist user with id: ${id}`
-            }
-        }
-        return await user?.save()
-    } catch (error) {
-        throw error;
-    }
-}
+
 const getOneByCredentialId = async (credentialId: string) => {
     try {
         const user = await userModel.findOne({ credential_id: credentialId }, { credential_id: false });
@@ -84,4 +69,4 @@ const getOneByEmail = async (email: string) => {
         throw error;
     }
 }
-export const userService = {updateById, getOneByCredentialId, createOne, getAll, getOneById, getOneByEmail }
+export const userService = { getOneByCredentialId, createOne, getAll, getOneById, getOneByEmail }
