@@ -10,7 +10,7 @@ const createOne = async (createBookDto: CreateBookDto, imageFile: Express.Multer
         const { id } = book;
         const { size, buffer, mimetype } = imageFile;
         validateFile(mimetype, size);
-        const image = await handleUploadFile({ filename: id, mimetype, buffer });
+        const image = await handleUploadFile({ filename: id, mimetype, buffer, isAvatar: false });
         book.image = image;
         return await book.save();
     } catch (error) {
@@ -39,7 +39,7 @@ const updateOneById = async (id: string, updateBookDto: CreateBookDto, imageFile
         if (imageFile) {
             const { size, buffer, mimetype } = imageFile;
             validateFile(mimetype, size);
-            const image = await handleUploadFile({ filename: id, mimetype, buffer });
+            const image = await handleUploadFile({ filename: id, mimetype, buffer, isAvatar: false });
             book!.image = image;
         }
         if (updateBookDto.genres) {
