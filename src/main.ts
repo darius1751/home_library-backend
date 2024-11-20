@@ -12,6 +12,7 @@ import { authRouter } from './routers/auth.router';
 import { userRouter } from './routers/user.router';
 import { bookRouter } from './routers/book.router';
 import { emailRouter } from './routers/email.router';
+import { transport } from './config/email.config';
 
 
 const main = async () => {
@@ -30,8 +31,6 @@ const main = async () => {
     app.use('/api/v1/user', userRouter);
     app.use('/api/v1/books', bookRouter);
     app.use('/api/v1/email', emailRouter);
-
-
 
     await openConnection();
     app.listen(port, () => {
