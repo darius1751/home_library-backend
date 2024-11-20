@@ -33,3 +33,4 @@ export const getOneById = async (request: Request, response: Response) => {
         response.status(statusCode).json(error);
     }
 }
+

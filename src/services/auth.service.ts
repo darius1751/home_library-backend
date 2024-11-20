@@ -19,6 +19,26 @@ const createOne = async ({ user, password }: Credential) => {
         throw error;
     }
 }
+
+const updateOne = async (id: string, { user, password }: Credential) => {
+    try {
+        const newPassword = await hash(password, 10);
+        return await authModel.findByIdAndUpdate(id, { user, password: newPassword });
+    } catch (error) {
+        throw error;
+    }
+}
+
+const getOneByUser = async (user: string) => {
+    try {
+        const credential = await authModel.findOne({ user })
+        console.log(credential);
+        return(credential)
+    } catch (error) {
+        throw error;
+    }
+    
+}
 const login = async ({ user, password }: Credential) => {
     try {
         const auth = await authModel.findOne({ user });
@@ -42,4 +62,4 @@ const login = async ({ user, password }: Credential) => {
 }
 export const existsUser = async (user: string) => !!await authModel.exists({ user });
 
-export const authService = { login, createOne }
+export const authService = { login, createOne, updateOne, getOneByUser }

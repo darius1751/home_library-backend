@@ -17,6 +17,29 @@ export const login = async (request: Request, response: Response) => {
     }
 }
 
+export const updateOne = async (request: Request, response: Response) => {
+    try {
+        const { id } = request.params;
+        const credential = request.body;
+        const newCredential = await authService.updateOne(id, credential);
+        response.json(newCredential);
+    } catch (error: any) {
+        const { statusCode = 500 } = error;
+        response.status(statusCode).json(error);
+    }
+}
+
+export const getOneByUser = async (request: Request, response: Response) => {
+    try {
+        const { id } = request.params;
+        const credential = await authService.getOneByUser(id);
+        response.json(credential);
+    } catch (error: any) {
+        const { statusCode = 500 } = error;
+        response.status(statusCode).json(error);
+    }
+}
+
 // export const logout = async (_request: Request, response: Response) => {
 //     try {
 //         response.clearCookie("token").json({ message: `Logout successfull` })

@@ -5,3 +5,4 @@ export const userRouter = Router();
 userRouter.post('/', createOne);
 userRouter.get('/', getAll)
 userRouter.get('/:id', getOneById)
+
