@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { avatarService } from "../services/avatar.service";
 
-export const getAll = async (request: Request, response: Response) => {
+export const getAll = async (_request: Request, response: Response) => {
     try {
         const avatars = await avatarService.getAll();
         response.json(avatars);
