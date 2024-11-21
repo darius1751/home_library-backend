@@ -29,15 +29,12 @@ const updateOne = async (id: string, { user, password }: Credential) => {
     }
 }
 
-const getOneByUser = async (user: string) => {
+const getOneById = async (id: string) => {
     try {
-        const credential = await authModel.findOne({ user })
-        console.log(credential);
-        return(credential)
+        return await authModel.findById(id);
     } catch (error) {
         throw error;
     }
-    
 }
 const login = async ({ user, password }: Credential) => {
     try {
@@ -62,4 +59,4 @@ const login = async ({ user, password }: Credential) => {
 }
 export const existsUser = async (user: string) => !!await authModel.exists({ user });
 
-export const authService = { login, createOne, updateOne, getOneByUser }
+export const authService = { login, createOne, updateOne, getOneById }

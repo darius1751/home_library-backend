@@ -29,11 +29,12 @@ export const updateOne = async (request: Request, response: Response) => {
     }
 }
 
-export const getOneByUser = async (request: Request, response: Response) => {
+export const getOneById = async (request: Request, response: Response) => { 
     try {
+        console.log("in function")
         const { id } = request.params;
-        const credential = await authService.getOneByUser(id);
-        response.json(credential);
+        const user = await authService.getOneById(id);
+        response.json(user);
     } catch (error: any) {
         const { statusCode = 500 } = error;
         response.status(statusCode).json(error);
