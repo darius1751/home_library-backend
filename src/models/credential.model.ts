@@ -10,7 +10,7 @@ export const AuthSchema = new Schema({
     password: {
         type: String,
         minLength: 8,
-        required: true
+        required: true,
     }
 }, { timestamps: true, versionKey: false });
 

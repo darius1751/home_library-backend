@@ -19,18 +19,35 @@ const createOne = async ({ user, password }: Credential) => {
         throw error;
     }
 }
+
+const updateOne = async (id: string, { user, password }: Credential) => {
+    try {
+        const newPassword = await hash(password, 10);
+     return await authModel.findByIdAndUpdate(id, { $set: {  password: newPassword } }, {new: true});
+    } catch (error) {
+        throw error;
+    }
+}
+
+const getOneById = async (id: string) => {
+    try {
+        return await authModel.findById(id);
+    } catch (error) {
+        throw error;
+    }
+}
 const login = async ({ user, password }: Credential) => {
     try {
-        const auth = await authModel.findOne({ user });
-        if (!auth) {
+        const currentUser = await authModel.findOne({ user})
+        if (!currentUser) {
             throw {
                 statusCode: 400,
                 message: `Not exist user: ${user}`
             }
         }
-        const isValid = await compare(password, auth.password);
+        const isValid = await compare(password, currentUser.password);
         if (isValid)
-            return await userService.getOneByCredentialId(auth.id);
+            return await userService.getOneByCredentialId(currentUser.id);
         else
             throw {
                 statusCode: 400,
@@ -42,4 +59,4 @@ const login = async ({ user, password }: Credential) => {
 }
 export const existsUser = async (user: string) => !!await authModel.exists({ user });
 
-export const authService = { login, createOne }
+export const authService = { login, createOne, updateOne, getOneById }

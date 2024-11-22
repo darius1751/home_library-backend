@@ -5,8 +5,9 @@ export const openConnection = async () => {
     try {
         config();
         await connect(process.env.MONGO_DB_URI || '', {
+            dbName: 'homelibrary',
             directConnection: true,
-            connectTimeoutMS: 3000 
+            connectTimeoutMS: 3000
         });
         console.log('MongoDB Connection Is Working');
     } catch (error) {
