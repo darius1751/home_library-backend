@@ -14,7 +14,7 @@ const createOne = async ({ user, email, password }: Credential) => {
         }
         const newPassword = await hash(password, 10);
         const auth = await authModel.create({ user, email, password: newPassword });
-        return auth._id;
+        return auth;
     } catch (error) {
         throw error;
     }

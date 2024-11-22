@@ -22,8 +22,7 @@ export const validateResetJWT = async (request: Request, response: Response, nex
 
     try {
         const token = request.query.token
-        console.log("token",token)
-        /*
+       
         if (!token) {
             response.status(402).json({
                 message: `Token is required`
@@ -31,7 +30,7 @@ export const validateResetJWT = async (request: Request, response: Response, nex
             return;
         }
         verify(token as string, process.env.JWT_SECRET || '');
-        */
+        
         next();
         
     } catch (error) {

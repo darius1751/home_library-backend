@@ -6,8 +6,9 @@ export const login = async (request: Request, response: Response) => {
     try {
         const credential = request.body;
         const user = await authService.login(credential);
+        const username = credential.user;
         const { id, name } = user;
-        const token = sign({ id, name }, process.env.JWT_SECRET || '', { expiresIn: '1h' });
+        const token = sign({ id, name, username }, process.env.JWT_SECRET || '', { expiresIn: '1h' });
         // response.cookie("token", token, { httpOnly: true, secure: true }).json(user);
         response.json({ user, token });
     } catch (error: any) {
@@ -22,7 +23,6 @@ export const updateOne = async (request: Request, response: Response) => {
         const { id } = request.params;
         const credential = request.body;
         const newCredential = await authService.updateOne(id, credential);
-        console.log("controllerCredential", newCredential)
         response.json(newCredential);
     } catch (error: any) {
         const { statusCode = 500 } = error;
