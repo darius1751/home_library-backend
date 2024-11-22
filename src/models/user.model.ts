@@ -8,6 +8,10 @@ export const UserSchema = new Schema({
         required: true,
         unique: true,
     },
+    avatar: {
+        type: String,
+        required: false
+    },
     name: {
         type: String,
         required: true,
