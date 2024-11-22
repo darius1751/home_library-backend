@@ -34,3 +34,14 @@ export const getOneById = async (request: Request, response: Response) => {
     }
 }
 
+export const getOneByEmail = async (request: Request, response: Response) => {  
+    try {
+        const { email } = request.params;
+        const user = await userService.getOneByEmail(email);
+        response.json(user);
+    } catch (error: any) {
+        const { statusCode = 500 } = error;
+        response.status(statusCode).json(error);
+    }
+}
+
