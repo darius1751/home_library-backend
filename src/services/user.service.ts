@@ -51,6 +51,7 @@ const createOne = async (createUserDto: CreateUserDto) => {
             }
         }
         const { id: credentialId , user: username} = await authService.createOne(credential);
+        console.log({ credentialId, username });
         const { id } = await userModel.create({ ...newUser, email, credential_id: credentialId, username });
         return await userModel.findById(id, { credential_id: false });
     } catch (error) {
