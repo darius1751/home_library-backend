@@ -3,7 +3,7 @@ import { Credential } from "../interfaces/credential"
 import { authModel } from "../models/credential.model"
 import { userService } from "./user.service";
 
-const createOne = async ({ user, password }: Credential) => {
+const createOne = async ({ user, email, password }: Credential) => {
     try {
         const existUser = await existsUser(user);
         if (existUser) {
@@ -13,7 +13,7 @@ const createOne = async ({ user, password }: Credential) => {
             }
         }
         const newPassword = await hash(password, 10);
-        const auth = await authModel.create({ user, password: newPassword });
+        const auth = await authModel.create({ user, email, password: newPassword });
         return auth._id;
     } catch (error) {
         throw error;
@@ -23,7 +23,7 @@ const createOne = async ({ user, password }: Credential) => {
 const updateOne = async (id: string, { user, password }: Credential) => {
     try {
         const newPassword = await hash(password, 10);
-        return await authModel.findByIdAndUpdate(id, { user, password: newPassword });
+     return await authModel.findByIdAndUpdate(id, { $set: {  password: newPassword } }, {new: true});
     } catch (error) {
         throw error;
     }
@@ -36,18 +36,18 @@ const getOneById = async (id: string) => {
         throw error;
     }
 }
-const login = async ({ user, password }: Credential) => {
+const login = async ({ user, password, email }: Credential) => {
     try {
-        const auth = await authModel.findOne({ user });
-        if (!auth) {
+        const currentUser = await authModel.findOne({ user}) || await authModel.findOne({ email });
+        if (!currentUser) {
             throw {
                 statusCode: 400,
                 message: `Not exist user: ${user}`
             }
         }
-        const isValid = await compare(password, auth.password);
+        const isValid = await compare(password, currentUser.password);
         if (isValid)
-            return await userService.getOneByCredentialId(auth.id);
+            return await userService.getOneByCredentialId(currentUser.id);
         else
             throw {
                 statusCode: 400,

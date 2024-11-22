@@ -1,6 +1,7 @@
 import { transport } from '../config/email.config';
 import { Request, Response } from "express";
 import {userService} from '../services/user.service';
+import { sign } from "jsonwebtoken";
 
 export const sendBookEmail = async (request: Request, response: Response) => {
    const {sender, receiver, name, friend, id, lastname} = request.body;
@@ -18,10 +19,11 @@ export const sendPasswordEmail = async (request: Request, response: Response) =>
     const user = await userService.getOneByEmail(email);
     const id = user?.id;
     const name = user?.name;
+    const token = sign({ id, name }, process.env.JWT_SECRET || '', { expiresIn: '5m' });
     await transport.sendMail({
         from: `Home Library <${process.env.EMAIL_USER}>`,
         to: email,
         subject: 'Password Reset',
-        text: `Hi ${name}! \n\n Click the link below to reset your password: \n\n http://localhost:3000/reset-password/${id} \n\n Love, Home Library`,
+        text: `Hi ${name}! \n\n Click the link below to reset your password: \n\n http://localhost:3000/reset-password/${id}?token=${token} \n\n Love, Home Library`,
 
  } )}

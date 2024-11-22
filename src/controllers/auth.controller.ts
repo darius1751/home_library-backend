@@ -22,6 +22,7 @@ export const updateOne = async (request: Request, response: Response) => {
         const { id } = request.params;
         const credential = request.body;
         const newCredential = await authService.updateOne(id, credential);
+        console.log("controllerCredential", newCredential)
         response.json(newCredential);
     } catch (error: any) {
         const { statusCode = 500 } = error;
@@ -31,7 +32,6 @@ export const updateOne = async (request: Request, response: Response) => {
 
 export const getOneById = async (request: Request, response: Response) => { 
     try {
-        console.log("in function")
         const { id } = request.params;
         const user = await authService.getOneById(id);
         response.json(user);
