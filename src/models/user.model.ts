@@ -25,9 +25,6 @@ export const UserSchema = new Schema({
     birthday: {
         type: SchemaTypes.Date,
         required: true
-    },
-    username: {
-        type: String,
     }
 }, { timestamps: true, versionKey: false });
 export const userModel = model('users', UserSchema);

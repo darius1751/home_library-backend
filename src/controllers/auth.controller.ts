@@ -10,7 +10,7 @@ export const login = async (request: Request, response: Response) => {
         const { id, name } = user;
         const token = sign({ id, name, username }, process.env.JWT_SECRET || '', { expiresIn: '1h' });
         // response.cookie("token", token, { httpOnly: true, secure: true }).json(user);
-        response.json({ user, token });
+        response.json({ user:{...user.toJSON(), username}, token });
     } catch (error: any) {
         const { statusCode = 500 } = error;
         console.log({ error })
