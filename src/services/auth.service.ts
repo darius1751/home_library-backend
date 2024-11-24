@@ -42,7 +42,7 @@ const login = async ({ user, password }: Credential) => {
         if (!currentUser) {
             throw {
                 statusCode: 400,
-                message: `Not exist user: ${user}`
+                message: `User does not exist: ${user}`
             }
         }
         const isValid = await compare(password, currentUser.password);
@@ -51,7 +51,7 @@ const login = async ({ user, password }: Credential) => {
         else
             throw {
                 statusCode: 400,
-                message: `Error in auth`
+                message: `Authentication error`
             }
     } catch (error) {
         throw error;

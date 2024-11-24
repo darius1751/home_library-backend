@@ -4,17 +4,17 @@ import { model, Schema,  Types } from "mongoose";
 const BookSchema = new Schema({
     title: {
         type: String,
-        required: true,
+        required: [true, 'Title is required'],
         minLength: [3, 'Title must be at least 3 characters long'],    
     },
     author: {
         type: String,
-        required: true,
+        required: [true, 'Author is required'],
         minLength: [3, 'Author must be at least 3 characters long']
     },
     summary: {
         type: String,
-        required: true,
+        required: [true, 'Summary is required'],
         minLength: [10, 'Summary must be at least 10 characters long']
     },
     image: {
@@ -27,17 +27,17 @@ const BookSchema = new Schema({
     user: {
         type: String,
         ref: 'users',
-        required: true
+        required: [true, 'User is required']
     },
     location: {
         type: String,
         enum: ['library', 'lent', 'wishlist'],
-        required: true
+        required: [true, 'Location is required']
     },
     state: {
         type: String,
         enum: ['read', 'currently reading', 'unread', 'not finished'],
-        required: true
+        required: [true, 'State is required']
     }
    
 }, { timestamps: true, versionKey: false });

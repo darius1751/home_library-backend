@@ -5,12 +5,12 @@ export const AuthSchema = new Schema({
         type: String,
         minLength: 5,
         unique: true,
-        required: true
+        required: [true, 'User is required'],
     },
     password: {
         type: String,
         minLength: 8,
-        required: true,
+        required: [true, 'Password is required'],
     }
 }, { timestamps: true, versionKey: false });
 
