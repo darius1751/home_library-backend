@@ -14,7 +14,7 @@ const createOne = async ({ user, password }: Credential) => {
         }
         const newPassword = await hash(password, 10);
         const auth = await authModel.create({ user, password: newPassword });
-        return auth._id;
+        return auth.id;
     } catch (error) {
         throw error;
     }
@@ -23,7 +23,7 @@ const createOne = async ({ user, password }: Credential) => {
 const updateOne = async (id: string, { user, password }: Credential) => {
     try {
         const newPassword = await hash(password, 10);
-     return await authModel.findByIdAndUpdate(id, { $set: {  password: newPassword } }, {new: true});
+        return await authModel.findByIdAndUpdate(id, { $set: { password: newPassword } }, { new: true });
     } catch (error) {
         throw error;
     }
@@ -38,7 +38,7 @@ const getOneById = async (id: string) => {
 }
 const login = async ({ user, password }: Credential) => {
     try {
-        const currentUser = await authModel.findOne({ user})
+        const currentUser = await authModel.findOne({ user })
         if (!currentUser) {
             throw {
                 statusCode: 400,
