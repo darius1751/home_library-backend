@@ -1,18 +1,23 @@
 import { transport } from '../config/email.config';
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import {userService} from '../services/user.service';
 import { sign } from "jsonwebtoken";
 
-export const sendBookEmail = async (request: Request, response: Response) => {
-   const {sender, receiver, name, friend, id, lastname} = request.body;
-    await transport.sendMail({
-        from: `${name} ${lastname} <${sender}>`,
-        to: receiver,
-        cc: sender,
-        subject: `${name} ${lastname} sent you their book list`,
-        text: `Hi ${friend}! \n\n Here are all the books in my library. You can see what books I have and what books are in my wishlist. \n\n Click the link below to see the list: \n\n http://localhost:3000/books/${id} \n\n Love, ${name}`,
-    })
-    return response.json({ message: 'Email sent successfully', status: 200 });
+export const sendBookEmail: RequestHandler = async (request: Request, response: Response) => {
+    try {
+        const { sender, receiver, name, friend, id, lastname } = request.body;
+        await transport.sendMail({
+            from: `${name} ${lastname} <${sender}>`,
+            to: receiver,
+            cc: sender,
+            subject: `${name} ${lastname} sent you their book list`,
+            text: `Hi ${friend}! \n\n Here are all the books in my library. You can see what books I have and what books are in my wishlist. \n\n Click the link below to see the list: \n\n http://localhost:3000/books/${id} \n\n Love, ${name}`,
+        })
+        response.json({ message: 'Email sent successfully', status: 200 });
+    } catch (error: any) {
+        const { statusCode = 500 } = error;
+        response.status(statusCode).json(error);
+    }
 }
 
 export const sendPasswordEmail = async (request: Request, response: Response) => {
