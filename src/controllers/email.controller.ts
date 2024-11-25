@@ -12,6 +12,7 @@ export const sendBookEmail = async (request: Request, response: Response) => {
         subject: `${name} ${lastname} sent you their book list`,
         text: `Hi ${friend}! \n\n Here are all the books in my library. You can see what books I have and what books are in my wishlist. \n\n Click the link below to see the list: \n\n http://localhost:3000/books/${id} \n\n Love, ${name}`,
     })
+    return response.json({ message: 'Email sent successfully', status: 200 });
 }
 
 export const sendPasswordEmail = async (request: Request, response: Response) => {
