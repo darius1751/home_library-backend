@@ -21,26 +21,43 @@ export const sendBookEmail: RequestHandler = async (request: Request, response: 
 }
 
 export const sendPasswordEmail = async (request: Request, response: Response) => {
-    const { email} = request.body;
-    const user = await userService.getOneByEmail(email);
-    const id = user?.id;
-    const name = user?.name;
-    const token = sign({ id, name }, process.env.JWT_SECRET || '', { expiresIn: '5m' });
-    await transport.sendMail({
-        from: `Home Library <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: 'Password Reset',
-        text: `Hi ${name}! \n\n Click the link below to reset your password: \n\n http://localhost:3000/reset-password/${id}?token=${token} \n\n Love, Home Library`,
+    try {
+        const { email} = request.body;
+        const user = await userService.getOneByEmail(email);
+        const id = user?.id;
+        const name = user?.name;
+        const token = sign({ id, name }, process.env.JWT_SECRET || '', { expiresIn: '5m' });
+        await transport.sendMail({
+            from: `Home Library <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: 'Password Reset',
+            text: `Hi ${name}! \n\n Click the link below to reset your password: \n\n http://localhost:3000/reset-password/${id}?token=${token} \n\n Love, Home Library`,
+    
+     } )
+     response.json({ message: 'Email sent successfully', status: 200 });
 
- } )}
+    } catch (error: any) {
+        const { statusCode = 500 } = error;
+        response.status(statusCode).json(error);
+    }
+  }
 
  export const sendWelcomeEmail = async (request: Request, response: Response) => {
-    const { email} = request.body;
-    const user = await userService.getOneByEmail(email);
-    const name = user?.name;
-    await transport.sendMail({
-        from: `Home Library <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: 'Welcome to Home Library',
-        text: `Hi ${name}! \n\n Welcome to Home Library! Here you can organize your books and share them with your friends. Click the link below to begin the adventure. \n\n http://localhost:3000 \n\n Love, Home Library`,
- } )}
+    try{
+        const { email} = request.body;
+        const user = await userService.getOneByEmail(email);
+        const name = user?.name;
+        await transport.sendMail({
+            from: `Home Library <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: 'Welcome to Home Library',
+            text: `Hi ${name}! \n\n Welcome to Home Library! Here you can organize your books and share them with your friends. Click the link below to begin the adventure. \n\n http://localhost:3000 \n\n Love, Home Library`,
+     } )
+     response.json({ message: 'Email sent successfully', status: 200 });
+
+    } catch (error: any) {
+        const { statusCode = 500 } = error;
+        response.status(statusCode).json(error);
+    }
+  
+}
