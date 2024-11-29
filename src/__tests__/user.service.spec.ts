@@ -19,6 +19,14 @@ jest.mock("../services/auth.service", () => ({
     }
 }));
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
+afterAll(() => {
+    jest.resetAllMocks();
+});
+
 describe('User service', () => {
     afterEach(() => {
         jest.clearAllMocks();

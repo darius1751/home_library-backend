@@ -20,6 +20,14 @@ jest.mock("../utils/validateFile", () => ({
     validateFile: jest.fn()
 }));
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
+afterAll(() => {
+    jest.resetAllMocks();
+});
+
 describe('Book service', () => {
     afterEach(() => {
         jest.clearAllMocks();
