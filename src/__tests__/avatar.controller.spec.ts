@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { avatarService } from "../../services/avatar.service";
-import { getAll } from "../avatar.controller";
+import { avatarService } from "../services/avatar.service";
+import { getAll } from "../controllers/avatar.controller";
 
-jest.mock("../../services/avatar.service");
+jest.mock("../services/avatar.service");
 
 describe('Avatar controller', () => {
     let mockRequest: Partial<Request>;

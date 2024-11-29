@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { userService } from "../../services/user.service";
-import { sendBookEmail, sendPasswordEmail, sendWelcomeEmail } from "../email.controller";
-import { transport } from "../../config/email.config"
+import { userService } from "../services/user.service";
+import { sendBookEmail, sendPasswordEmail, sendWelcomeEmail } from "../controllers/email.controller";
+import { transport } from "../config/email.config"
 import { sign } from "jsonwebtoken";
 
-jest.mock("../../services/user.service", () => ({
+jest.mock("../services/user.service", () => ({
     userService: {
         getOneByEmail: jest.fn()
     }
 }));
 
-jest.mock("../../config/email.config", () => ({
+jest.mock("../config/email.config", () => ({
     transport: {
         sendMail: jest.fn()
     }

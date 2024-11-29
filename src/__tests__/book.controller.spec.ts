@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { bookService } from "../../services/book.service";
-import { createOne, getAll, getOneById, updateOneById, addGenre, getAllByGenre, deleteOneById } from "../book.controller";
+import { bookService } from "../services/book.service";
+import { createOne, getAll, getOneById, updateOneById, addGenre, getAllByGenre, deleteOneById } from "../controllers/book.controller";
 
-jest.mock("../../services/book.service", () => ({
+jest.mock("../services/book.service", () => ({
     bookService: {
         createOne: jest.fn(),
         getAll: jest.fn(),
