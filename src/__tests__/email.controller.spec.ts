@@ -20,6 +20,14 @@ jest.mock("jsonwebtoken", () => ({
     sign: jest.fn()
 }));
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
+afterAll(() => {
+    jest.resetAllMocks();
+});
+
 describe('Email controller', () => {
     let mockRequest: Partial<Request>;
     let mockResponse: Partial<Response>;

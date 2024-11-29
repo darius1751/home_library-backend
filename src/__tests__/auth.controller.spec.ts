@@ -39,6 +39,14 @@ describe('Auth controller', () => {
         };
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    afterAll(() => {
+        jest.resetAllMocks();
+    });
+
     it('should login successfully', async () => {
         const mockUser = { id: 1, name: "Test User", toJSON: jest.fn().mockReturnValue({ id: 1, name: "Test User" }) };
         (authService.login as jest.Mock).mockResolvedValue(mockUser);

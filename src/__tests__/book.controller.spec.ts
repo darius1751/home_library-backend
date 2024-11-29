@@ -14,6 +14,14 @@ jest.mock("../services/book.service", () => ({
     }
 }));
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
+afterAll(() => {
+    jest.resetAllMocks();
+});
+
 describe('Book controller', () => {
     let mockRequest: Partial<Request>;
     let mockResponse: Partial<Response>;

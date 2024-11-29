@@ -9,6 +9,14 @@ jest.mock("../config/cloudinary.config", () => ({
     }
 }));
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
+afterAll(() => {
+    jest.resetAllMocks();
+});
+
 describe('Avatar service - getAll', () => {
     afterEach(() => {
         jest.clearAllMocks();

@@ -20,6 +20,14 @@ describe('Avatar controller', () => {
         };
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    afterAll(() => {
+        jest.resetAllMocks();
+    });
+
     it('should get all avatars successfully', async () => {
         const mockAvatars = [{ id: 1, name: "Avatar 1" }, { id: 2, name: "Avatar 2" }];
         (avatarService.getAll as jest.Mock).mockResolvedValue(mockAvatars);

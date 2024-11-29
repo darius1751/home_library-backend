@@ -16,6 +16,14 @@ jest.mock("../utils/validateMongoId", () => ({
     validateMongoId: jest.fn()
 }));
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
+afterAll(() => {
+    jest.resetAllMocks();
+});
+
 
 describe('User controller', () => {
     let mockRequest: Partial<Request>;

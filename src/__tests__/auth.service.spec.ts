@@ -1,6 +1,6 @@
 import { authService } from "../services/auth.service";
 import { authModel } from "../models/credential.model";
-import {userService} from "../services/user.service";
+import { userService } from "../services/user.service";
 import bcrypt from "bcrypt";
 
 jest.mock("../models/credential.model", () => ({
@@ -33,6 +33,10 @@ describe('Auth service', () => {
         jest.clearAllMocks();
     });
 
+    afterAll(() => {
+        jest.resetAllMocks();
+    });
+
     describe('createOne', () => {
         it('should create a user successfully', async () => {
             const mockUser = { id: 1, user: "testuser", password: "hashedPassword" };
@@ -60,7 +64,7 @@ describe('Auth service', () => {
             (bcrypt.hash as jest.Mock).mockResolvedValue("newHashedPassword");
             (authModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(mockUser);
 
-            const result = await authService.updateOne(mockUser.id.toString(), {user: "testuser", password: "newPassword123" });
+            const result = await authService.updateOne(mockUser.id.toString(), { user: "testuser", password: "newPassword123" });
 
             expect(bcrypt.hash).toHaveBeenCalledWith("newPassword123", 10);
             expect(authModel.findByIdAndUpdate).toHaveBeenCalledWith(mockUser.id.toString(), { $set: { password: "newHashedPassword" } }, { new: true });
@@ -71,7 +75,7 @@ describe('Auth service', () => {
             const mockError = new Error("Internal Server Error");
             (bcrypt.hash as jest.Mock).mockRejectedValue(mockError);
 
-            await expect(authService.updateOne("1", {user: "testuser", password: "newPassword123" })).rejects.toThrow(mockError);
+            await expect(authService.updateOne("1", { user: "testuser", password: "newPassword123" })).rejects.toThrow(mockError);
         });
     });
 
@@ -101,13 +105,38 @@ describe('Auth service', () => {
             (authModel.findOne as jest.Mock).mockResolvedValue(mockUser);
             (bcrypt.compare as jest.Mock).mockResolvedValue(true);
             (userService.getOneByCredentialId as jest.Mock).mockResolvedValue(mockUserDetails);
-    
+
             const result = await authService.login({ user: "testuser", password: "password123" });
-    
+
             expect(authModel.findOne).toHaveBeenCalledWith({ user: "testuser" });
             expect(bcrypt.compare).toHaveBeenCalledWith("password123", "hashedPassword");
             expect(userService.getOneByCredentialId).toHaveBeenCalledWith(mockUser.id);
             expect(result).toEqual(mockUserDetails);
+        });
+
+        it('should handle user does not exist error', async () => {
+            (authModel.findOne as jest.Mock).mockResolvedValue(null);
+
+            await expect(authService.login({ user: "nonexistentuser", password: "password123" })).rejects.toEqual({
+                statusCode: 400,
+                message: `User does not exist: nonexistentuser`
+            });
+
+            expect(authModel.findOne).toHaveBeenCalledWith({ user: "nonexistentuser" });
+        });
+
+        it('should handle authentication error', async () => {
+            const mockUser = { id: 1, user: "testuser", password: "hashedPassword" };
+            (authModel.findOne as jest.Mock).mockResolvedValue(mockUser);
+            (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+
+            await expect(authService.login({ user: "testuser", password: "wrongpassword" })).rejects.toEqual({
+                statusCode: 400,
+                message: `Authentication error`
+            });
+
+            expect(authModel.findOne).toHaveBeenCalledWith({ user: "testuser" });
+            expect(bcrypt.compare).toHaveBeenCalledWith("wrongpassword", "hashedPassword");
         });
 
         it('should handle login error', async () => {
