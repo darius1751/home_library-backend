@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { authService } from "../../services/auth.service";
+import { authService } from "../services/auth.service";
 import { sign } from "jsonwebtoken";
-import { login, updateOne, getOneById } from "../auth.controller";
+import { login, updateOne, getOneById } from "../controllers/auth.controller";
 
 describe('Auth controller', () => {
     it('should login', async () => {
@@ -14,17 +14,9 @@ describe('Auth controller', () => {
         expect(mockResponse.json).toHaveBeenCalledTimes(1);
     });
 });
-jest.mock("../../services/auth.service");
+jest.mock("../services/auth.service");
 jest.mock("jsonwebtoken");
 
-jest.mock("../../services/auth.service");
-jest.mock("jsonwebtoken");
-
-jest.mock("../../services/auth.service");
-jest.mock("jsonwebtoken");
-
-jest.mock("../../services/auth.service");
-jest.mock("jsonwebtoken");
 
 describe('Auth controller', () => {
     let mockRequest: Partial<Request>;

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { userService } from "../../services/user.service";
-import { createOne, getAll, getOneById, getOneByEmail } from "../../controllers/user.controller";
-import { validateMongoId } from "../../utils/validateMongoId";
+import { userService } from "../services/user.service";
+import { createOne, getAll, getOneById, getOneByEmail } from "../controllers/user.controller";
+import { validateMongoId } from "../utils/validateMongoId";
 
-jest.mock("../../services/user.service", () => ({
+jest.mock("../services/user.service", () => ({
     userService: {
         createOne: jest.fn(),
         getAll: jest.fn(),
@@ -12,7 +12,7 @@ jest.mock("../../services/user.service", () => ({
     }
 }));
 
-jest.mock("../../utils/validateMongoId", () => ({
+jest.mock("../utils/validateMongoId", () => ({
     validateMongoId: jest.fn()
 }));
 
