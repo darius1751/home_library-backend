@@ -47,11 +47,11 @@ const createOne = async (createUserDto: CreateUserDto) => {
         if (existEmail) {
             throw {
                 statusCode: 400,
-                message: `Error in create user, exists email: ${email}`
+                message: `Error in create user, email exists: ${email}`
             }
         }
         const auth = await authService.createOne(credential);
-        const { id } = await userModel.create({ ...newUser,  credential_id: auth });
+        const { id } = await userModel.create({ ...newUser, email, credential_id: auth });
         return await userModel.findById(id, { credential_id: false });
     } catch (error) {
         throw error;
