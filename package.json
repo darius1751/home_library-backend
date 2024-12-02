@@ -5,8 +5,8 @@
   "scripts": {
     "build": "tsc -w",
     "build:prod": "tsc",
-    "dev": "node --watch dist/main.js",
-    "start": "node dist/main.js",
+    "dev": "node --watch src/dist/main.js",
+    "start": "node src/dist/main.js",
     "test": "jest --watchAll",
     "test:ci": "jest --coverage"
   },
