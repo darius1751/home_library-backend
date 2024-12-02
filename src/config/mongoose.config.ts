@@ -6,7 +6,7 @@ export const openConnection = async () => {
         config();
         await connect(process.env.MONGO_DB_URI || '', {
             dbName: process.env.DB_NAME,
-            directConnection: true,
+            directConnection: process.env.MONGO_DB_URI!.includes('localhost'),
             connectTimeoutMS: 3000
         });
         console.log('MongoDB Connection Is Working');
