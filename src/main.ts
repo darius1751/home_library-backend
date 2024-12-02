@@ -23,6 +23,7 @@ const main = async () => {
     app.use(helmet());
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
+    app.use(express.static('/public'))
     const port = env.PORT || 4000;
     app.use('/api-docs', serve, setup(swaggerConfig));
     app.use('/api-docs-example', serve, setup(swaggerConfig2));
