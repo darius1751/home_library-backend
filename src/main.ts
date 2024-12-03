@@ -17,7 +17,7 @@ import { avatarRouter } from './routers/avatar.router';
 const main = async () => {
     const app = express();
     config();
-    app.use(cors({ credentials: true, origin: [`${process.env.HOME}`] }));
+    app.use(cors({ credentials: true, origin: [`${process.env.HOME_URL}`] }));
     // Remove in production version
     app.use(morgan('tiny'));
     app.use(helmet());
