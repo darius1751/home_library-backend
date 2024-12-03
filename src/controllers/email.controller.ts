@@ -6,7 +6,7 @@ import { sign } from "jsonwebtoken";
 export const sendBookEmail: RequestHandler = async (request: Request, response: Response) => {
     try {
         const { sender, receiver, name, friend, id, lastname } = request.body;
-        const home = process.env.HOME || 'http://localhost:3000';
+        const home = process.env.HOME_URL || 'http://localhost:3000';
         await transport.sendMail({
             from: `${name} ${lastname} <${sender}>`,
             to: receiver,
@@ -28,7 +28,7 @@ export const sendPasswordEmail = async (request: Request, response: Response) =>
         const id = user?.id;
         const name = user?.name;
         const token = sign({ id, name }, process.env.JWT_SECRET || '', { expiresIn: '5m' });
-        const home = process.env.HOME || 'http://localhost:3000';
+        const home = process.env.HOME_URL || 'http://localhost:3000';
         await transport.sendMail({
             from: `Home Library <${process.env.EMAIL_USER}>`,
             to: email,
@@ -49,7 +49,7 @@ export const sendPasswordEmail = async (request: Request, response: Response) =>
         const { email} = request.body;
         const user = await userService.getOneByEmail(email);
         const name = user?.name;
-        const home = process.env.HOME || 'http://localhost:3000';
+        const home = process.env.HOME_URL || 'http://localhost:3000';
         await transport.sendMail({
             from: `Home Library <${process.env.EMAIL_USER}>`,
             to: email,
